@@ -1,4 +1,4 @@
-package com.example.UserProfileMicroService.dto;/* Made by: mehtakaran9 */
+package com.scrapbook.UserProfileMicroservice.dto;/* Made by: mehtakaran9 */
 
 import java.util.Date;
 

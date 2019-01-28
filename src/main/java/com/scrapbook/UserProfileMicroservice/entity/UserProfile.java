@@ -1,4 +1,4 @@
-package com.example.UserProfileMicroService.entity;/* Made by: mehtakaran9 */
+package com.scrapbook.UserProfileMicroservice.entity;/* Made by: mehtakaran9 */
 
 import org.hibernate.annotations.GenericGenerator;
 
