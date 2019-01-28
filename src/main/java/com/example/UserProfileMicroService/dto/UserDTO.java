@@ -1,21 +1,9 @@
-package com.example.UserProfileMicroService.entity;/* Made by: mehtakaran9 */
+package com.example.UserProfileMicroService.dto;/* Made by: mehtakaran9 */
 
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.util.Date;
 
-@Entity
-public class UserProfile {
-    public static final String TABLE_NAME = "UserProfile";
-    public static final String ID_COLUMN = "id";
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name="uuid",strategy = "uuid2")
-    @Column(name = UserProfile.ID_COLUMN)
+public class UserDTO {
+
     private String userId;
     private String userImageURL;
     private Date dateOfBirth;
