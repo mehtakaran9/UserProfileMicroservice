@@ -1,38 +1,40 @@
-package com.scrapbook.UserProfileMicroservice.dto;/* Made by: mehtakaran9 */
+package com.scrapbook.UserProfileMicroservice.entity;/* Made by: mehtakaran9 */
 
+import javax.persistence.*;
 import java.util.Date;
 
-public class UserDTO {
-
+@Entity
+@Table(name = User.TABLE_NAME, uniqueConstraints = {@UniqueConstraint(columnNames = "username"),
+                                                    @UniqueConstraint(columnNames = "id")})
+public class User {
+    public static final String TABLE_NAME = "UserProfile";
+    public static final String ID_COLUMN = "id";
+    @Id
+    @Column(name = User.ID_COLUMN)
     private String userId;
     private String userImageURL;
+
     private Date dateOfBirth;
+
+    private String username;
     private String interest;
     private String about;
-    private String username;
 
-    public UserDTO(String userId, String username, String userImageURL, Date dateOfBirth, String interest, String about) {
+    public User() {
+
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public User(String userId, String userImageURL, String username, Date dateOfBirth, String interest, String about) {
         this.userId = userId;
-        this.username = username;
         this.userImageURL = userImageURL;
         this.dateOfBirth = dateOfBirth;
+        this.username = username;
         this.interest = interest;
         this.about = about;
-    }
-
-    public UserDTO() {
-    }
-
-    @Override
-    public String toString() {
-        return "UserDTO{" +
-                "userId='" + userId + '\'' +
-                ", userImageURL='" + userImageURL + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
-                ", interest='" + interest + '\'' +
-                ", about='" + about + '\'' +
-                ", username='" + username + '\'' +
-                '}';
     }
 
     public String getUsername() {
@@ -43,8 +45,16 @@ public class UserDTO {
         this.username = username;
     }
 
-    public String getUserId() {
-        return userId;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId='" + userId + '\'' +
+                ", userImageURL='" + userImageURL + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", interest='" + interest + '\'' +
+                ", about='" + about + '\'' +
+                '}';
     }
 
     public void setUserId(String userId) {
