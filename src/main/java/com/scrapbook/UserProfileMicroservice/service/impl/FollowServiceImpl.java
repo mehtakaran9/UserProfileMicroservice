@@ -1,6 +1,6 @@
 package com.scrapbook.UserProfileMicroservice.service.impl;/* Made by: mehtakaran9 */
 
-
+import com.scrapbook.UserProfileMicroservice.dto.FollowResponseDTO;
 import com.scrapbook.UserProfileMicroservice.entity.Follow;
 import com.scrapbook.UserProfileMicroservice.repository.FollowRepository;
 import com.scrapbook.UserProfileMicroservice.service.FollowService;
@@ -25,11 +25,6 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public void unfollow(String followId, String followerId) {
-        followRepository.unfollow(followId, followerId);
-    }
-
-    @Override
     public List<Follow> findByFollowerId(String followerId){
 
         List<Follow> stringList = followRepository.findByFollowerId(followerId);
@@ -38,8 +33,14 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public List<Follow> findByFollowId(String followId){
-        List<Follow> stringList = followRepository.findByFollowId(followId);
+    public List<Follow> findByUserId(String followId){
+        List<Follow> stringList = followRepository.findByUserId(followId);
         return stringList;
+    }
+
+    @Override
+    public List<FollowResponseDTO> findListByFollowId(String id){
+        List<FollowResponseDTO> followResponseDTOList = followRepository.findListByFollowId(id);
+        return followResponseDTOList;
     }
 }
