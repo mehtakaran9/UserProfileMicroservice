@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -27,17 +29,22 @@ public class FollowController {
     }
 
     @RequestMapping(value = "/getFollowers", method = RequestMethod.GET)
-    public ResponseEntity<List<Follow>> findByFollowerId(String id){
+    public ResponseEntity<List<String>> findByFollowerId(String id){
         List<Follow> stringList = followService.findByFollowerId(id);
-        return new ResponseEntity<>(stringList, HttpStatus.ACCEPTED);
+
+        List<String> stringList1 = new ArrayList<>();
+        for(Follow temp:stringList)
+            stringList1.add(temp.getFollowId());
+        return new ResponseEntity<>(stringList1, HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/getFollow", method = RequestMethod.GET)
-    public ResponseEntity<List<Follow>> findByFollowId(String id){
+    public ResponseEntity<List<String>> findByFollowId(String id){
         List<Follow> stringList = followService.findByFollowId(id);
+        List<String> stringList1 = new ArrayList<>();
         for(Follow temp:stringList)
-            System.out.println(temp.toString());
-        return new ResponseEntity<>(stringList, HttpStatus.ACCEPTED);
+            stringList1.add(temp.getFollowerId());
+        return new ResponseEntity<>(stringList1, HttpStatus.ACCEPTED);
     }
 
 }

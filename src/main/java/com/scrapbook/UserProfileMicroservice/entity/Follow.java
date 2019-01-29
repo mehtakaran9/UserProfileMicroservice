@@ -14,8 +14,6 @@ public class Follow {
     @GeneratedValue(generator ="uuid")                 // hibernate
     @GenericGenerator( name="uuid", strategy = "uuid2")
     private String qid;
-    @ManyToMany
-    @JoinColumn(name="user_id")
 
     private String followId;
     private String followerId;
