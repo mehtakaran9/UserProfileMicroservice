@@ -31,8 +31,16 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public List<String> getAllFollowers(String followId){
-        List<String> stringList = followRepository.getAllFollowers(followId);
+    public List<Follow> findByFollowerId(String followerId){
+
+        List<Follow> stringList = followRepository.findByFollowerId(followerId);
+        System.out.println(stringList.toString());
+        return stringList;
+    }
+
+    @Override
+    public List<Follow> findByFollowId(String followId){
+        List<Follow> stringList = followRepository.findByFollowId(followId);
         return stringList;
     }
 }

@@ -26,9 +26,17 @@ public class FollowController {
         followService.unfollow(followId, followerId);
     }
 
-    @RequestMapping(value = "/getAllFollowers", method = RequestMethod.GET)
-    public ResponseEntity<List<String>> getAllFollowers(String id){
-        List<String> stringList = followService.getAllFollowers(id);
+    @RequestMapping(value = "/getFollowers", method = RequestMethod.GET)
+    public ResponseEntity<List<Follow>> findByFollowerId(String id){
+        List<Follow> stringList = followService.findByFollowerId(id);
+        return new ResponseEntity<>(stringList, HttpStatus.ACCEPTED);
+    }
+
+    @RequestMapping(value = "/getFollow", method = RequestMethod.GET)
+    public ResponseEntity<List<Follow>> findByFollowId(String id){
+        List<Follow> stringList = followService.findByFollowId(id);
+        for(Follow temp:stringList)
+            System.out.println(temp.toString());
         return new ResponseEntity<>(stringList, HttpStatus.ACCEPTED);
     }
 

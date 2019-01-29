@@ -5,10 +5,10 @@ import java.util.Date;
 
 @Entity
 @Table(name = User.TABLE_NAME, uniqueConstraints = {@UniqueConstraint(columnNames = "username"),
-                                                    @UniqueConstraint(columnNames = "id")})
+                                                    @UniqueConstraint(columnNames = "userId")})
 public class User {
     public static final String TABLE_NAME = "UserProfile";
-    public static final String ID_COLUMN = "id";
+    public static final String ID_COLUMN = "userId";
     @Id
     @Column(name = User.ID_COLUMN)
     private String userId;

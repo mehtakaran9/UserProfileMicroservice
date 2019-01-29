@@ -36,9 +36,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "/delete/{userId}",method = RequestMethod.DELETE)
-    public  ResponseEntity<String> deleteUser(@PathVariable String userId){
-        userService.delete(userId);
-        return new ResponseEntity<>("Success",HttpStatus.CREATED);
+    public  ResponseEntity<String> deleteByUserId(@PathVariable String userId){
+        System.out.println(userId);
+        userService.deleteByUserId(userId);
+        return new ResponseEntity<>("Success",HttpStatus.OK);
 
     }
 }

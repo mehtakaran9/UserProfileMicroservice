@@ -1,14 +1,17 @@
 package com.scrapbook.UserProfileMicroservice.service;/* Made by: mehtakaran9 */
 
-import com.scrapbook.UserProfileMicroservice.dto.UserDTO;
 import com.scrapbook.UserProfileMicroservice.entity.User;
+
+import java.util.List;
 
 public interface UserService {
     User add(User user);
 
     User findOne(String customerId);
 
-    void delete(String userId);
+//    List<String> findByUserId(String userId);
 
     User updateUser(User user);
+
+    void deleteByUserId(String userId);
 }

@@ -1,21 +1,35 @@
 package com.scrapbook.UserProfileMicroservice.entity;/* Made by: mehtakaran9 */
 
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name = Follow.TABLE_NAME, uniqueConstraints = {@UniqueConstraint(columnNames = "followId"),
-        @UniqueConstraint(columnNames = "followId")})
+@Table(name = Follow.TABLE_NAME)
 public class Follow {
     public static final String TABLE_NAME = "Follow";
-    public static final String ID_COLUMN = "followId";
+//    public static final String ID_COLUMN = "followId";
     @Id
-    @Column(name = ID_COLUMN)
+    @GeneratedValue(generator ="uuid")                 // hibernate
+    @GenericGenerator( name="uuid", strategy = "uuid2")
+    private String qid;
+    @ManyToMany
+    @JoinColumn(name="user_id")
+
     private String followId;
     private String followerId;
 
     public String getFollowId() {
         return followId;
+    }
+
+    public String getQid() {
+        return qid;
+    }
+
+    public void setQid(String qid) {
+        this.qid = qid;
     }
 
     public void setFollowId(String followId) {
@@ -30,10 +44,12 @@ public class Follow {
         this.followerId = followerId;
     }
 
+
     @Override
     public String toString() {
         return "Follow{" +
-                "followId='" + followId + '\'' +
+                "qid='" + qid + '\'' +
+                ", followId='" + followId + '\'' +
                 ", followerId='" + followerId + '\'' +
                 '}';
     }
