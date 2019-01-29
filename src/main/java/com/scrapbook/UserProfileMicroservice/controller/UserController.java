@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/userProfile")
 public class UserController {
@@ -41,5 +43,11 @@ public class UserController {
         userService.deleteByUserId(userId);
         return new ResponseEntity<>("Success",HttpStatus.OK);
 
+    }
+
+    @RequestMapping(value = "getByUserName", method = RequestMethod.GET)
+    public List<User> getByUserName(@RequestParam String username){
+        List<User> user=userService.searchByUserName(username);
+        return user;
     }
 }
