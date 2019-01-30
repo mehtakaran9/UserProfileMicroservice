@@ -1,16 +1,13 @@
 package com.scrapbook.UserProfileMicroservice.controller;/* Made by: mehtakaran9 */
 
-import com.scrapbook.UserProfileMicroservice.dto.FollowResponseDTO;
+import com.scrapbook.UserProfileMicroservice.dto.FollowDTO;
 import com.scrapbook.UserProfileMicroservice.entity.Follow;
 import com.scrapbook.UserProfileMicroservice.service.FollowService;
 import com.scrapbook.UserProfileMicroservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,12 +21,12 @@ public class FollowController {
     UserService userService;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity<Follow> add(Follow follow){
+    public ResponseEntity<Follow> add(@RequestBody Follow follow){
         return new ResponseEntity<>(followService.add(follow), HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/getFollowers", method = RequestMethod.GET)
-    public ResponseEntity<List<String>> findByFollowerId(String id){
+    @RequestMapping(value = "/getFollowers/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<String>> findByFollowerId(@PathVariable String id){
         List<Follow> stringList = followService.findByFollowerId(id);
 
         List<String> stringList1 = new ArrayList<>();
@@ -38,8 +35,8 @@ public class FollowController {
         return new ResponseEntity<>(stringList1, HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/getFollow", method = RequestMethod.GET)
-    public ResponseEntity<List<String>> findByUserId(String id){
+    @RequestMapping(value = "/getFollow/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<String>> findByUserId(@PathVariable String id){
         List<Follow> stringList = followService.findByUserId(id);
         List<String> stringList1 = new ArrayList<>();
         for(Follow temp:stringList)
@@ -47,11 +44,24 @@ public class FollowController {
         return new ResponseEntity<>(stringList1, HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/getFollowDetails", method = RequestMethod.GET)
-    public ResponseEntity<List<FollowResponseDTO>> findListByUserId(String id){
-        List<FollowResponseDTO> followResponseDTOList = followService.findListByFollowId(id);
+    @RequestMapping(value = "/getFollowDetails/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<Object>> findFollowersListByUserId(@PathVariable String id){
+        List<Object> followResponseDTOList = followService.findFollowersListByUserId(id);
         return new ResponseEntity<>(followResponseDTOList, HttpStatus.OK);
-
     }
+
+    @RequestMapping(value = "/getFollowerDetails/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<Object>> findUsersByFollowingId(@PathVariable String id){
+        List<Object> followResponseDTOList = followService.findUsersByFollowingId(id);
+        return new ResponseEntity<>(followResponseDTOList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getFollowResponse/{id}", method = RequestMethod.GET)
+    public ResponseEntity<FollowDTO> followResponse(@PathVariable String id){
+        FollowDTO followDTO = followService.followResponse(id);
+        return new ResponseEntity<>(followDTO, HttpStatus.OK);
+    }
+
+
 
 }

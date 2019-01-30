@@ -1,8 +1,10 @@
 package com.scrapbook.UserProfileMicroservice.service.impl;/* Made by: mehtakaran9 */
 
-import com.scrapbook.UserProfileMicroservice.dto.FollowResponseDTO;
+import com.scrapbook.UserProfileMicroservice.dto.FollowDTO;
 import com.scrapbook.UserProfileMicroservice.entity.Follow;
+import com.scrapbook.UserProfileMicroservice.entity.User;
 import com.scrapbook.UserProfileMicroservice.repository.FollowRepository;
+import com.scrapbook.UserProfileMicroservice.repository.UserRepository;
 import com.scrapbook.UserProfileMicroservice.service.FollowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,9 @@ import java.util.List;
 public class FollowServiceImpl implements FollowService {
     @Autowired
     FollowRepository followRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     @Transactional(readOnly = false)
@@ -39,8 +44,32 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public List<FollowResponseDTO> findListByFollowId(String id){
-        List<FollowResponseDTO> followResponseDTOList = followRepository.findListByFollowId(id);
+    public List<Object> findFollowersListByUserId(String id){
+        List<Object> followResponseDTOList1 = followRepository.findFollowersListByUserId(id);
+
+
+        return followResponseDTOList1;
+    }
+
+    @Override
+    public List<Object> findUsersByFollowingId(String id) {
+        List<Object> followResponseDTOList = followRepository.findUsersByFollowerId(id);
         return followResponseDTOList;
+    }
+
+    @Override
+    public FollowDTO followResponse(String id){
+        FollowDTO followDTO = new FollowDTO();
+        User user = userRepository.findOne(id);
+        followDTO.setAbout(user.getAbout());
+        followDTO.setDateOfBirth(user.getDateOfBirth());
+        followDTO.setInterest(user.getInterest());
+        followDTO.setUserImageURL(user.getUserImageURL());
+        followDTO.setUsername(user.getUsername());
+        followDTO.setFollowResponseFollowerList(followRepository.findUsersByFollowerId(id));
+        followDTO.setFollowResponseDTOList1(followRepository.findFollowersListByUserId(id));
+        return followDTO;
+
+
     }
 }

@@ -1,16 +1,29 @@
 package com.scrapbook.UserProfileMicroservice.dto;/* Made by: mehtakaran9 */
 
 public class FollowResponseDTO {
-    private String followerId;
+    private String user_id;
     private String username;
-    private String followerImage;
+    private String user_imageurl;
 
-    public String getFollowerId() {
-        return followerId;
+    public FollowResponseDTO() {
+
     }
 
-    public void setFollowerId(String followerId) {
-        this.followerId = followerId;
+    @Override
+    public String toString() {
+        return "FollowResponseDTO{" +
+                "user_id='" + user_id + '\'' +
+                ", username='" + username + '\'' +
+                ", user_imageurl='" + user_imageurl + '\'' +
+                '}';
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
     public String getUsername() {
@@ -21,29 +34,17 @@ public class FollowResponseDTO {
         this.username = username;
     }
 
-    public String getFollowerImage() {
-        return followerImage;
+    public String getUser_imageurl() {
+        return user_imageurl;
     }
 
-    public void setFollowerImage(String followerImage) {
-        this.followerImage = followerImage;
+    public void setUser_imageurl(String user_imageurl) {
+        this.user_imageurl = user_imageurl;
     }
 
-    public FollowResponseDTO(String followerId, String username, String followerImage) {
-        this.followerId = followerId;
+    public FollowResponseDTO(String user_id, String username, String user_imageurl) {
+        this.user_id = user_id;
         this.username = username;
-        this.followerImage = followerImage;
-    }
-
-    public FollowResponseDTO() {
-    }
-
-    @Override
-    public String toString() {
-        return "FollowResponseDTO{" +
-                "followerId='" + followerId + '\'' +
-                ", username='" + username + '\'' +
-                ", followerImage='" + followerImage + '\'' +
-                '}';
+        this.user_imageurl = user_imageurl;
     }
 }
