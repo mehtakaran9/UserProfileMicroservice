@@ -1,6 +1,7 @@
 package com.scrapbook.UserProfileMicroservice.service.impl;/* Made by: mehtakaran9 */
 
 import com.scrapbook.UserProfileMicroservice.dto.FollowDTO;
+import com.scrapbook.UserProfileMicroservice.dto.FollowResponseDTO;
 import com.scrapbook.UserProfileMicroservice.entity.Follow;
 import com.scrapbook.UserProfileMicroservice.entity.User;
 import com.scrapbook.UserProfileMicroservice.repository.FollowRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,6 +24,7 @@ public class FollowServiceImpl implements FollowService {
 
     @Autowired
     UserRepository userRepository;
+    private Object object;
 
     @Override
     @Transactional(readOnly = false)
@@ -44,17 +47,37 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public List<Object> findFollowersListByUserId(String id){
-        List<Object> followResponseDTOList1 = followRepository.findFollowersListByUserId(id);
+    public List<FollowResponseDTO> findFollowersListByUserId(String id){
+        List<Object[]> temp=followRepository.findFollowersListByUserId(id);
+        List<FollowResponseDTO> temptemp=new ArrayList<FollowResponseDTO>();
+       for(Object[] oneFollower: temp)
+        {
+            FollowResponseDTO followResponseDTO=new FollowResponseDTO();
+            followResponseDTO.setUserId(oneFollower[0].toString());
+            followResponseDTO.setUsername(oneFollower[1].toString());
+            followResponseDTO.setUserImageURL(oneFollower[2].toString());
+            temptemp.add(followResponseDTO);
 
+        }
 
-        return followResponseDTOList1;
+        return temptemp;
     }
 
     @Override
-    public List<Object> findUsersByFollowingId(String id) {
-        List<Object> followResponseDTOList = followRepository.findUsersByFollowerId(id);
-        return followResponseDTOList;
+    public List<FollowResponseDTO> findUsersByFollowingId(String id) {
+        List<Object[]> temp=followRepository.findUsersByFollowerId(id);
+        List<FollowResponseDTO> temptemp=new ArrayList<FollowResponseDTO>();
+        for(Object[] oneFollower: temp)
+        {
+            FollowResponseDTO followResponseDTO=new FollowResponseDTO();
+            followResponseDTO.setUserId(oneFollower[0].toString());
+            followResponseDTO.setUsername(oneFollower[1].toString());
+            followResponseDTO.setUserImageURL(oneFollower[2].toString());
+            temptemp.add(followResponseDTO);
+
+        }
+        return temptemp;
+
     }
 
     @Override
@@ -66,8 +89,8 @@ public class FollowServiceImpl implements FollowService {
         followDTO.setInterest(user.getInterest());
         followDTO.setUserImageURL(user.getUserImageURL());
         followDTO.setUsername(user.getUsername());
-        followDTO.setFollowResponseFollowerList(followRepository.findUsersByFollowerId(id));
-        followDTO.setFollowResponseDTOList1(followRepository.findFollowersListByUserId(id));
+        followDTO.setFollowResponseFollowerList(findFollowersListByUserId(id));
+        followDTO.setFollowResponseDTOList1(findUsersByFollowingId(id));
         return followDTO;
 
 
