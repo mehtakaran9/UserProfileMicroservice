@@ -3,6 +3,8 @@ package com.scrapbook.UserProfileMicroservice.controller;/* Made by: mehtakaran9
 import com.scrapbook.UserProfileMicroservice.dto.FollowDTO;
 import com.scrapbook.UserProfileMicroservice.dto.FollowResponseDTO;
 import com.scrapbook.UserProfileMicroservice.entity.Follow;
+import com.scrapbook.UserProfileMicroservice.exceptions.AlreadyFollowing;
+import com.scrapbook.UserProfileMicroservice.repository.FollowRepository;
 import com.scrapbook.UserProfileMicroservice.service.FollowService;
 import com.scrapbook.UserProfileMicroservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/follow")
 public class FollowController {
@@ -21,10 +24,19 @@ public class FollowController {
     FollowService followService;
 
     @Autowired
+    FollowRepository followRepository;
+    @Autowired
     UserService userService;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Follow> add(@RequestBody Follow follow){
+        List<Follow> followList=followRepository.findByUserId(follow.getUserId());
+        System.out.println(followList.toString());
+        System.out.println(follow.toString());
+        for(Follow temp: followList) {
+            if(temp.getFollowerId().equals(follow.getFollowerId())&&temp.getUserId().equals(follow.getUserId()))
+            throw new AlreadyFollowing();
+        }
         return new ResponseEntity<>(followService.add(follow), HttpStatus.CREATED);
     }
 

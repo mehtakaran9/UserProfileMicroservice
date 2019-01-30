@@ -1,14 +1,13 @@
 package com.scrapbook.UserProfileMicroservice.controller;/* Made by: mehtakaran9 */
 
-import com.scrapbook.UserProfileMicroservice.dto.UserDTO;
 import com.scrapbook.UserProfileMicroservice.entity.User;
 import com.scrapbook.UserProfileMicroservice.service.UserService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/userProfile")
 public class UserController {
