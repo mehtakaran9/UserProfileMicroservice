@@ -9,19 +9,17 @@ import javax.persistence.*;
 @Table(name = Follow.TABLE_NAME)
 public class Follow {
     public static final String TABLE_NAME = "Follow";
-//    public static final String ID_COLUMN = "followId";
+//    public static final String ID_COLUMN = "userId";
     @Id
     @GeneratedValue(generator ="uuid")                 // hibernate
     @GenericGenerator( name="uuid", strategy = "uuid2")
     private String qid;
-    @ManyToMany
-    @JoinColumn(name="user_id")
 
-    private String followId;
+    private String userId;
     private String followerId;
 
-    public String getFollowId() {
-        return followId;
+    public String getUserId() {
+        return userId;
     }
 
     public String getQid() {
@@ -32,8 +30,8 @@ public class Follow {
         this.qid = qid;
     }
 
-    public void setFollowId(String followId) {
-        this.followId = followId;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getFollowerId() {
@@ -49,7 +47,7 @@ public class Follow {
     public String toString() {
         return "Follow{" +
                 "qid='" + qid + '\'' +
-                ", followId='" + followId + '\'' +
+                ", userId='" + userId + '\'' +
                 ", followerId='" + followerId + '\'' +
                 '}';
     }
