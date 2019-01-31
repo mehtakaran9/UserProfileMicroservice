@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/userProfile")
@@ -16,6 +18,18 @@ public class UserController {
 
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     public ResponseEntity<User> addUser(@RequestBody User user){
+        if(user.getAbout()==null){
+            user.setAbout("No About");
+        }
+        if(user.getDateOfBirth()==null){
+            user.setDateOfBirth(new Date());
+        }
+        if(user.getInterest()==null){
+            user.setInterest("No Interest Added");
+        }
+        if(user.getUserImageURL()==null){
+            user.setUserImageURL("https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png");
+        }
         User userCreated = userService.add(user);
         return new ResponseEntity<>(userCreated,HttpStatus.CREATED);
 

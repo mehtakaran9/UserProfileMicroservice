@@ -65,7 +65,7 @@ public class FollowController {
     }
 
     @RequestMapping(value = "/getFollowDetails/{id}", method = RequestMethod.GET)
-    public ResponseEntity<List<FollowResponseDTO>> findFollowersListByUserId(@PathVariable String id) throws IOException {
+    public ResponseEntity<List<FollowResponseDTO>> findFollowersListByUserId(@PathVariable String id) {
         List<FollowResponseDTO> followResponseDTOList = followService.findFollowersListByUserId(id);
         return new ResponseEntity<>(followResponseDTOList, HttpStatus.OK);
     }
