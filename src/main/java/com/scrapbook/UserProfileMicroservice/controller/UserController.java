@@ -2,14 +2,14 @@ package com.scrapbook.UserProfileMicroservice.controller;/* Made by: mehtakaran9
 
 import com.scrapbook.UserProfileMicroservice.dto.UpdateUserDTO;
 import com.scrapbook.UserProfileMicroservice.entity.User;
+import com.scrapbook.UserProfileMicroservice.service.FollowService;
 import com.scrapbook.UserProfileMicroservice.service.UserService;
-import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Date;
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -17,6 +17,9 @@ import java.util.Date;
 public class UserController {
     @Autowired
     UserService userService;
+
+    @Autowired
+    FollowService followService;
 
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     public ResponseEntity<User> addUser(@RequestBody User user){
@@ -65,10 +68,17 @@ public class UserController {
         return new ResponseEntity<>(updateUserDTO, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "getByUserName", method = RequestMethod.GET)
+    public List<User> getByUserName(@RequestParam String username){
+        List<User> user=userService.searchByUserName(username);
+        return user;
+    }
+
     @RequestMapping(value = "/delete/{userId}",method = RequestMethod.DELETE)
-    public  ResponseEntity<String> deleteByUserId(@PathVariable String userId){
+    public ResponseEntity<String> deleteByUserId(@PathVariable String userId){
         System.out.println(userId);
         userService.deleteByUserId(userId);
+        followService.deleteFollowByUserId(userId);
         return new ResponseEntity<>("Success",HttpStatus.OK);
 
     }

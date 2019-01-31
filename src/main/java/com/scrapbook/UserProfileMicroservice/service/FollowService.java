@@ -20,4 +20,6 @@ public interface FollowService {
     FollowDTO followResponse(String id);
 
     void deleteByUserIdAndFollowerId(String userId, String followerId);
+
+    void deleteFollowByUserId(String userId);
 }

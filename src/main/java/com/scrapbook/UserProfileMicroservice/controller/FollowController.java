@@ -4,6 +4,7 @@ import com.scrapbook.UserProfileMicroservice.dto.FollowDTO;
 import com.scrapbook.UserProfileMicroservice.dto.FollowResponseDTO;
 import com.scrapbook.UserProfileMicroservice.entity.Follow;
 import com.scrapbook.UserProfileMicroservice.exceptions.AlreadyFollowing;
+import com.scrapbook.UserProfileMicroservice.exceptions.CantFollowSameUser;
 import com.scrapbook.UserProfileMicroservice.repository.FollowRepository;
 import com.scrapbook.UserProfileMicroservice.service.FollowService;
 import com.scrapbook.UserProfileMicroservice.service.UserService;
@@ -35,7 +36,9 @@ public class FollowController {
             if(temp.getFollowerId().equals(follow.getFollowerId())&&temp.getUserId().equals(follow.getUserId()))
             throw new AlreadyFollowing();
         }
-
+        if(follow.getUserId().equals(follow.getFollowerId())){
+            throw new CantFollowSameUser();
+        }
 
         return new ResponseEntity<>(followService.add(follow), HttpStatus.CREATED);
     }

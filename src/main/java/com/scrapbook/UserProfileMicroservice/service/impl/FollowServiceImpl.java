@@ -55,7 +55,7 @@ public class FollowServiceImpl implements FollowService {
             com.contest.notificationProducer.dto.Follow followNotfication=new com.contest.notificationProducer.dto.Follow();
             followNotfication.setSender(follow.getFollowerId());
             List<NotificationMedium> notificationMediumList=new ArrayList<>();
-            notificationMediumList.add(NotificationMedium.ANDROID);
+            notificationMediumList.add(NotificationMedium.EMAIL);
             header.setNotificationMedium(notificationMediumList);
             header.setNotificationType(NotificationType.FOLLOW);
             header.setNotificationTypeBody(followNotfication);
@@ -92,16 +92,14 @@ public class FollowServiceImpl implements FollowService {
     public List<FollowResponseDTO> findFollowersListByUserId(String id){
         List<Object[]> temp=followRepository.findFollowersListByUserId(id);
         List<FollowResponseDTO> temptemp=new ArrayList<FollowResponseDTO>();
-       for(Object[] oneFollower: temp)
+        for(Object[] oneFollower: temp)
         {
             FollowResponseDTO followResponseDTO=new FollowResponseDTO();
             followResponseDTO.setUserId(oneFollower[0].toString());
             followResponseDTO.setUsername(oneFollower[1].toString());
             followResponseDTO.setUserImageURL(oneFollower[2].toString());
             temptemp.add(followResponseDTO);
-
         }
-
         return temptemp;
     }
 
@@ -134,12 +132,15 @@ public class FollowServiceImpl implements FollowService {
         followDTO.setFollowResponseFollowerList(findFollowersListByUserId(id));
         followDTO.setFollowResponseDTOList1(findUsersByFollowingId(id));
         return followDTO;
-
-
     }
 
     @Override
     public void deleteByUserIdAndFollowerId(String userId, String followerId) {
         followRepository.deleteByUserIdAndFollowerId(userId, followerId);
+    }
+
+    @Override
+    public void deleteFollowByUserId(String userId){
+        followRepository.deleteFollowByUserId(userId);
     }
 }

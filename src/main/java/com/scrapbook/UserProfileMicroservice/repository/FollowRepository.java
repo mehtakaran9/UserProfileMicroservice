@@ -23,4 +23,9 @@ public interface FollowRepository extends CrudRepository<Follow, String> {
     @Modifying
     @Query(value = "DELETE FROM follow f WHERE f.user_id = :userId AND f.follower_id = :followerId", nativeQuery = true)
     void deleteByUserIdAndFollowerId(@Param("userId") String userId, @Param("followerId") String followerId);
+
+
+    @Modifying
+    @Query(value = "DELETE FROM follow f WHERE f.user_id = :userId", nativeQuery = true)
+    void deleteFollowByUserId(@Param("userId") String userId);
 }
