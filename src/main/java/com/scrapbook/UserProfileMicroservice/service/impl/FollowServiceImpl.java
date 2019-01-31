@@ -4,19 +4,19 @@ import com.scrapbook.UserProfileMicroservice.dto.FollowDTO;
 import com.scrapbook.UserProfileMicroservice.dto.FollowResponseDTO;
 import com.scrapbook.UserProfileMicroservice.entity.Follow;
 import com.scrapbook.UserProfileMicroservice.entity.User;
+import com.scrapbook.UserProfileMicroservice.exceptions.NullValueException;
 import com.scrapbook.UserProfileMicroservice.repository.FollowRepository;
 import com.scrapbook.UserProfileMicroservice.repository.UserRepository;
 import com.scrapbook.UserProfileMicroservice.service.FollowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
+@Transactional
 
 public class FollowServiceImpl implements FollowService {
     @Autowired
@@ -29,14 +29,19 @@ public class FollowServiceImpl implements FollowService {
     @Override
     @Transactional(readOnly = false)
     public Follow add(Follow follow) {
+        if((follow.getUserId()!=null)&&(follow.getFollowerId()!=null)){
         return followRepository.save(follow);
+        }
+        else{
+            throw new NullValueException();
+        }
+
     }
 
     @Override
     public List<Follow> findByFollowerId(String followerId){
 
         List<Follow> stringList = followRepository.findByFollowerId(followerId);
-        System.out.println(stringList.toString());
         return stringList;
     }
 
@@ -94,5 +99,10 @@ public class FollowServiceImpl implements FollowService {
         return followDTO;
 
 
+    }
+
+    @Override
+    public void deleteByUserIdAndFollowerId(String userId, String followerId) {
+        followRepository.deleteByUserIdAndFollowerId(userId, followerId);
     }
 }

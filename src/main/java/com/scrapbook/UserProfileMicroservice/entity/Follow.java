@@ -4,6 +4,7 @@ package com.scrapbook.UserProfileMicroservice.entity;/* Made by: mehtakaran9 */
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = Follow.TABLE_NAME)
