@@ -1,6 +1,7 @@
 package com.scrapbook.UserProfileMicroservice.repository;/* Made by: mehtakaran9 */
 
 import com.scrapbook.UserProfileMicroservice.entity.Follow;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -18,4 +19,8 @@ public interface FollowRepository extends CrudRepository<Follow, String> {
 
 
     List<Follow> findByFollowerId(String followerId);
+
+    @Modifying
+    @Query(value = "DELETE FROM follow f WHERE f.user_id = :userId AND f.follower_id = :followerId", nativeQuery = true)
+    void deleteByUserIdAndFollowerId(@Param("userId") String userId, @Param("followerId") String followerId);
 }

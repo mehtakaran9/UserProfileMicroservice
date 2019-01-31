@@ -59,6 +59,11 @@ public class FollowController {
         return new ResponseEntity<>(stringList1, HttpStatus.ACCEPTED);
     }
 
+    @RequestMapping(value = "/unfollow", method = RequestMethod.DELETE)
+    public void unfollow(String userId, String followerId){
+        followService.deleteByUserIdAndFollowerId(userId, followerId);
+    }
+
     @RequestMapping(value = "/getFollowDetails/{id}", method = RequestMethod.GET)
     public ResponseEntity<List<FollowResponseDTO>> findFollowersListByUserId(@PathVariable String id) throws IOException {
         List<FollowResponseDTO> followResponseDTOList = followService.findFollowersListByUserId(id);

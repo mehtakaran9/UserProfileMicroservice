@@ -10,14 +10,13 @@ import com.scrapbook.UserProfileMicroservice.repository.UserRepository;
 import com.scrapbook.UserProfileMicroservice.service.FollowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
+@Transactional
 
 public class FollowServiceImpl implements FollowService {
     @Autowired
@@ -100,5 +99,10 @@ public class FollowServiceImpl implements FollowService {
         return followDTO;
 
 
+    }
+
+    @Override
+    public void deleteByUserIdAndFollowerId(String userId, String followerId) {
+        followRepository.deleteByUserIdAndFollowerId(userId, followerId);
     }
 }

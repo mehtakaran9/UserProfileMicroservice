@@ -18,4 +18,6 @@ public interface FollowService {
     List<FollowResponseDTO> findUsersByFollowingId(String id);
 
     FollowDTO followResponse(String id);
+
+    void deleteByUserIdAndFollowerId(String userId, String followerId);
 }
