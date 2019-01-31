@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +35,8 @@ public class FollowController {
             if(temp.getFollowerId().equals(follow.getFollowerId())&&temp.getUserId().equals(follow.getUserId()))
             throw new AlreadyFollowing();
         }
+
+
         return new ResponseEntity<>(followService.add(follow), HttpStatus.CREATED);
     }
 
@@ -65,7 +65,7 @@ public class FollowController {
     }
 
     @RequestMapping(value = "/getFollowDetails/{id}", method = RequestMethod.GET)
-    public ResponseEntity<List<FollowResponseDTO>> findFollowersListByUserId(@PathVariable String id) throws IOException {
+    public ResponseEntity<List<FollowResponseDTO>> findFollowersListByUserId(@PathVariable String id) {
         List<FollowResponseDTO> followResponseDTOList = followService.findFollowersListByUserId(id);
         return new ResponseEntity<>(followResponseDTOList, HttpStatus.OK);
     }
