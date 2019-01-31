@@ -35,6 +35,8 @@ public class FollowController {
             if(temp.getFollowerId().equals(follow.getFollowerId())&&temp.getUserId().equals(follow.getUserId()))
             throw new AlreadyFollowing();
         }
+
+
         return new ResponseEntity<>(followService.add(follow), HttpStatus.CREATED);
     }
 

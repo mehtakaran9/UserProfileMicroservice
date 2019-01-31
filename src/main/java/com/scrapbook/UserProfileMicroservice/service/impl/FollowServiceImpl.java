@@ -1,5 +1,10 @@
 package com.scrapbook.UserProfileMicroservice.service.impl;/* Made by: mehtakaran9 */
 
+import com.contest.notificationProducer.dto.Header;
+import com.contest.notificationProducer.exception.FieldsCanNotBeEmpty;
+import com.contest.notificationProducer.notificationEnum.NotificationMedium;
+import com.contest.notificationProducer.notificationEnum.NotificationType;
+import com.contest.notificationProducer.producer.FollowProducer;
 import com.recommendation.kafka_sdk.dto.FollowKafkaMessage;
 import com.recommendation.kafka_sdk.socialnetwork.FollowKafkaProducer;
 import com.scrapbook.UserProfileMicroservice.dto.FollowDTO;
@@ -13,7 +18,6 @@ import com.scrapbook.UserProfileMicroservice.service.FollowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +33,8 @@ public class FollowServiceImpl implements FollowService {
 
     @Autowired
     FollowKafkaProducer followKafkaProducer;
+    @Autowired
+    FollowProducer followProducer;
 
     private Object object;
 
@@ -45,7 +51,23 @@ public class FollowServiceImpl implements FollowService {
             followKafkaMessage.setTimestamp(System.nanoTime());
             followKafkaProducer.sendFollowKafkaMessage(followKafkaMessage);
         }
-        return resp;
+            Header header=new Header();
+            com.contest.notificationProducer.dto.Follow followNotfication=new com.contest.notificationProducer.dto.Follow();
+            followNotfication.setSender(follow.getFollowerId());
+            List<NotificationMedium> notificationMediumList=new ArrayList<>();
+            notificationMediumList.add(NotificationMedium.ANDROID);
+            header.setNotificationMedium(notificationMediumList);
+            header.setNotificationType(NotificationType.FOLLOW);
+            header.setNotificationTypeBody(followNotfication);
+            header.setTimeStamp(new java.util.Date().toString());
+            header.setReceiver(follow.getUserId());
+            try {
+                followProducer.send(header);
+            } catch (FieldsCanNotBeEmpty fieldsCanNotBeEmpty) {
+                fieldsCanNotBeEmpty.printStackTrace();
+            }
+
+            return resp;
         }
         else{
             throw new NullValueException();

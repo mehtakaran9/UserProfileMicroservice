@@ -1,7 +1,9 @@
 package com.scrapbook.UserProfileMicroservice.controller;/* Made by: mehtakaran9 */
 
+import com.scrapbook.UserProfileMicroservice.dto.UpdateUserDTO;
 import com.scrapbook.UserProfileMicroservice.entity.User;
 import com.scrapbook.UserProfileMicroservice.service.UserService;
+import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +48,21 @@ public class UserController {
         User user1 = userService.updateUser(user);
         return new ResponseEntity<>(user1, HttpStatus.CREATED);
 
+    }
+
+    @RequestMapping(value = "/updateUserResp/{userId}", method = RequestMethod.PUT)
+    public ResponseEntity<UpdateUserDTO> updateUserDTO(@RequestBody User user){
+        User user1 = userService.updateUser(user);
+        UpdateUserDTO updateUserDTO;
+
+        if(user1!=null){
+            updateUserDTO = new UpdateUserDTO(true,user1);
+        }
+        else{
+            updateUserDTO = new UpdateUserDTO(false,user1);
+
+        }
+        return new ResponseEntity<>(updateUserDTO, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/delete/{userId}",method = RequestMethod.DELETE)
