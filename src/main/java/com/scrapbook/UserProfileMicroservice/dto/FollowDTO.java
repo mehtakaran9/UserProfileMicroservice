@@ -1,6 +1,5 @@
 package com.scrapbook.UserProfileMicroservice.dto;/* Made by: mehtakaran9 */
 
-
 import java.util.Date;
 import java.util.List;
 

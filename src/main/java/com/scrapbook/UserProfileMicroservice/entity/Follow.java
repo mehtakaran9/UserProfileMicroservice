@@ -3,16 +3,17 @@ package com.scrapbook.UserProfileMicroservice.entity;/* Made by: mehtakaran9 */
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = Follow.TABLE_NAME)
 public class Follow {
     public static final String TABLE_NAME = "Follow";
-//    public static final String ID_COLUMN = "userId";
     @Id
-    @GeneratedValue(generator ="uuid")                 // hibernate
+    @GeneratedValue(generator ="uuid")
     @GenericGenerator( name="uuid", strategy = "uuid2")
     private String qid;
 
@@ -42,7 +43,6 @@ public class Follow {
     public void setFollowerId(String followerId) {
         this.followerId = followerId;
     }
-
 
     @Override
     public String toString() {

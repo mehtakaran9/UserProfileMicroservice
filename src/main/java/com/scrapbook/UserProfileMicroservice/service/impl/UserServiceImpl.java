@@ -8,7 +8,6 @@ import com.scrapbook.UserProfileMicroservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 @Service
@@ -32,7 +31,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteByUserId(String userId) {
-
         userRepository.delete(userId);
         followRepository.deleteFollowByUserId(userId);
     }
@@ -40,7 +38,6 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public List<User> searchByUserName(String username) {
-//        System.out.println(userName);
         return userRepository.findByUsernameIgnoreCase(username);
     }
 

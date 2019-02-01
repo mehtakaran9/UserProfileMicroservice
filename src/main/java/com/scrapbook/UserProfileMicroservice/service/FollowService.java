@@ -3,7 +3,6 @@ package com.scrapbook.UserProfileMicroservice.service;/* Made by: mehtakaran9 */
 import com.scrapbook.UserProfileMicroservice.dto.FollowDTO;
 import com.scrapbook.UserProfileMicroservice.dto.FollowResponseDTO;
 import com.scrapbook.UserProfileMicroservice.entity.Follow;
-
 import java.util.List;
 
 public interface FollowService {

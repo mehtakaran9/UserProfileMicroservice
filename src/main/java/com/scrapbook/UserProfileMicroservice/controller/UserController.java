@@ -1,6 +1,7 @@
 package com.scrapbook.UserProfileMicroservice.controller;/* Made by: mehtakaran9 */
 
 import com.scrapbook.UserProfileMicroservice.dto.UpdateUserDTO;
+import com.scrapbook.UserProfileMicroservice.dto.UserWrapper;
 import com.scrapbook.UserProfileMicroservice.entity.User;
 import com.scrapbook.UserProfileMicroservice.service.FollowService;
 import com.scrapbook.UserProfileMicroservice.service.UserService;
@@ -57,29 +58,27 @@ public class UserController {
     public ResponseEntity<UpdateUserDTO> updateUserDTO(@RequestBody User user){
         User user1 = userService.updateUser(user);
         UpdateUserDTO updateUserDTO;
-
         if(user1!=null){
             updateUserDTO = new UpdateUserDTO(true,user1);
         }
         else{
             updateUserDTO = new UpdateUserDTO(false,user1);
-
         }
         return new ResponseEntity<>(updateUserDTO, HttpStatus.OK);
     }
 
     @RequestMapping(value = "getByUserName", method = RequestMethod.GET)
-    public List<User> getByUserName(@RequestParam String username){
+    public UserWrapper getByUserName(@RequestParam String username){
         List<User> user=userService.searchByUserName(username);
-        return user;
+        UserWrapper userWrapper=new UserWrapper();
+        userWrapper.setUserList(user);
+        return userWrapper;
     }
 
     @RequestMapping(value = "/delete/{userId}",method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteByUserId(@PathVariable String userId){
-        System.out.println(userId);
         userService.deleteByUserId(userId);
         followService.deleteFollowByUserId(userId);
         return new ResponseEntity<>("Success",HttpStatus.OK);
-
     }
 }

@@ -1,11 +1,6 @@
 package com.scrapbook.UserProfileMicroservice.dto;/* Made by: mehtakaran9 */
 
 import com.scrapbook.UserProfileMicroservice.entity.User;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
-import javax.persistence.Column;
-import javax.persistence.Id;
-import java.util.Date;
 
 public class UpdateUserDTO {
 

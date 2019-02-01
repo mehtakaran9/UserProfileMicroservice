@@ -10,8 +10,6 @@ public interface UserService {
 
     User findOne(String customerId);
 
-//    List<String> findByUserId(String userId);
-
     void deleteByUserId(String userId);
 
     List<User> searchByUserName(String username);
