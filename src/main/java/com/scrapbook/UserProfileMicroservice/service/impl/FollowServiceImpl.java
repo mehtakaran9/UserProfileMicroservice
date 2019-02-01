@@ -112,12 +112,15 @@ public class FollowServiceImpl implements FollowService {
             FollowResponseDTO followResponseDTO=new FollowResponseDTO();
             followResponseDTO.setUserId(oneFollower[0].toString());
             followResponseDTO.setUsername(oneFollower[1].toString());
-            followResponseDTO.setUserImageURL(oneFollower[2].toString());
+            if(oneFollower[2].toString().equals(null)){
+                followResponseDTO.setUserImageURL("https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png");
+            }
+            else{
+                followResponseDTO.setUserImageURL(oneFollower[2].toString());
+            }
             temptemp.add(followResponseDTO);
-
         }
         return temptemp;
-
     }
 
     @Override

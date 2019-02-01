@@ -3,6 +3,7 @@ package com.scrapbook.UserProfileMicroservice.controller;/* Made by: mehtakaran9
 import com.scrapbook.UserProfileMicroservice.dto.UpdateUserDTO;
 import com.scrapbook.UserProfileMicroservice.dto.UserWrapper;
 import com.scrapbook.UserProfileMicroservice.entity.User;
+import com.scrapbook.UserProfileMicroservice.exceptions.UserAlreadyExists;
 import com.scrapbook.UserProfileMicroservice.service.FollowService;
 import com.scrapbook.UserProfileMicroservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,10 @@ public class UserController {
         }
         if(user.getUserImageURL()==null){
             user.setUserImageURL("https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png");
+        }
+        User user1 = userService.findOne(user.getUserId());
+        if(user1!=null){
+            throw new UserAlreadyExists();
         }
         User userCreated = userService.add(user);
         return new ResponseEntity<>(userCreated,HttpStatus.CREATED);
