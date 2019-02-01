@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
         }
 
         if(user.getUserImageURL()==null){
-            user.setUserImageURL("https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png");
+            user.setUserImageURL("https://www.nicepng.com/png/detail/301-3012856_account-user-profile-avatar-comments-free-image-user.png");
         }
         if(user.getUsername()==null){
             throw new UserNotFound();

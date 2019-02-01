@@ -104,7 +104,7 @@ public class FollowServiceImpl implements FollowService {
                 followResponseDTO.setUsername(oneFollower[0].toString());
             }
             if(oneFollower[1].toString().equals(null)){
-                followResponseDTO.setUserImageURL("https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png");
+                followResponseDTO.setUserImageURL("https://www.nicepng.com/png/detail/301-3012856_account-user-profile-avatar-comments-free-image-user.png");
             }
             else{
                 followResponseDTO.setUserImageURL(oneFollower[1].toString());
@@ -124,7 +124,7 @@ public class FollowServiceImpl implements FollowService {
             followResponseDTO.setUserId(oneFollower[0].toString());
             followResponseDTO.setUsername(oneFollower[2].toString());
             if(oneFollower[1].toString().equals(null)){
-                followResponseDTO.setUserImageURL("https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png");
+                followResponseDTO.setUserImageURL("https://www.nicepng.com/png/detail/301-3012856_account-user-profile-avatar-comments-free-image-user.png");
             }
             else{
                 followResponseDTO.setUserImageURL(oneFollower[1].toString());

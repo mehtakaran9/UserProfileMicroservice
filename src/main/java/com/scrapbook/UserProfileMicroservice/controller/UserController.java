@@ -36,7 +36,7 @@ public class UserController {
             user.setInterest("No Interest Added");
         }
         if(user.getUserImageURL()==null){
-            user.setUserImageURL("https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png");
+            user.setUserImageURL("https://www.nicepng.com/png/detail/301-3012856_account-user-profile-avatar-comments-free-image-user.png");
         }
         User user1 = userService.findOne(user.getUserId());
         if(user1!=null){
@@ -63,11 +63,6 @@ public class UserController {
     @RequestMapping(value = "/updateUserResp/{userId}", method = RequestMethod.PUT)
     public ResponseEntity<UpdateUserDTO> updateUserDTO(@RequestBody User user){
         UpdateUserDTO updateUserDTO;
-
-        System.out.println(user);
-        System.out.println(user.getUsername());
-
-
         User user1 = userService.updateUser(user);
         System.out.println("s"+user1.toString());
 
@@ -84,7 +79,7 @@ public class UserController {
             user.setInterest("No Interest Added");
         }
         if(user1.getUserImageURL()==null){
-            user1.setUserImageURL("https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png");
+            user1.setUserImageURL("https://www.nicepng.com/png/detail/301-3012856_account-user-profile-avatar-comments-free-image-user.png");
         }
         if(user1!=null){
             updateUserDTO = new UpdateUserDTO(true,user1);
@@ -92,7 +87,6 @@ public class UserController {
         else{
             updateUserDTO = new UpdateUserDTO(false,user1);
         }
-
         return new ResponseEntity<>(updateUserDTO, HttpStatus.OK);
     }
 
