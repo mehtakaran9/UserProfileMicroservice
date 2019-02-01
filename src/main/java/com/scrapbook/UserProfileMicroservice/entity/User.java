@@ -52,6 +52,7 @@ public class User {
                 "userId='" + userId + '\'' +
                 ", userImageURL='" + userImageURL + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
+                ", username='" + username + '\'' +
                 ", interest='" + interest + '\'' +
                 ", about='" + about + '\'' +
                 '}';

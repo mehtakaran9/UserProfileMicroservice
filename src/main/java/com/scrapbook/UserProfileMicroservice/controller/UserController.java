@@ -4,6 +4,7 @@ import com.scrapbook.UserProfileMicroservice.dto.UpdateUserDTO;
 import com.scrapbook.UserProfileMicroservice.dto.UserWrapper;
 import com.scrapbook.UserProfileMicroservice.entity.User;
 import com.scrapbook.UserProfileMicroservice.exceptions.UserAlreadyExists;
+import com.scrapbook.UserProfileMicroservice.exceptions.UserNotFound;
 import com.scrapbook.UserProfileMicroservice.service.FollowService;
 import com.scrapbook.UserProfileMicroservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,14 +62,37 @@ public class UserController {
 
     @RequestMapping(value = "/updateUserResp/{userId}", method = RequestMethod.PUT)
     public ResponseEntity<UpdateUserDTO> updateUserDTO(@RequestBody User user){
-        User user1 = userService.updateUser(user);
         UpdateUserDTO updateUserDTO;
+
+        System.out.println(user);
+        System.out.println(user.getUsername());
+
+
+        User user1 = userService.updateUser(user);
+        System.out.println("s"+user1.toString());
+
+        if(user1.getUsername()==null){
+            throw new UserNotFound();
+        }
+        if(user1.getAbout()==null){
+            user.setAbout("No About");
+        }
+        if(user1.getDateOfBirth()==null){
+            user.setDateOfBirth(new Date());
+        }
+        if(user1.getInterest()==null){
+            user.setInterest("No Interest Added");
+        }
+        if(user1.getUserImageURL()==null){
+            user1.setUserImageURL("https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png");
+        }
         if(user1!=null){
             updateUserDTO = new UpdateUserDTO(true,user1);
         }
         else{
             updateUserDTO = new UpdateUserDTO(false,user1);
         }
+
         return new ResponseEntity<>(updateUserDTO, HttpStatus.OK);
     }
 

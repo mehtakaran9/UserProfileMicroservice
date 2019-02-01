@@ -11,8 +11,11 @@ public class UpdateUserDTO {
     public UpdateUserDTO(Boolean status, User user) {
         this.status = status;
         this.user = user;
+
     }
 
+    public UpdateUserDTO() {
+    }
 
     public Boolean getStatus() {
         return status;

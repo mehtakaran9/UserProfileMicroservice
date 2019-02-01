@@ -8,6 +8,7 @@ import com.scrapbook.UserProfileMicroservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -44,7 +45,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public User updateUser(User user) {
         User user1 = userRepository.findOne(user.getUserId());
-        if(user1!=null){
+
+        System.out.println(user1.toString());
+        if(user.getAbout()==null){
+            user.setAbout("No About added");
+        }
+
+        if(user.getUserImageURL()==null){
+            user.setUserImageURL("https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png");
+        }
+        if(user.getUsername()==null){
+            throw new UserNotFound();
+        }
+        if(user.getInterest()==null){
+            user.setInterest("No Interest Added");
+        }
+        if(user.getDateOfBirth()==null){
+            user.setDateOfBirth(new Date());
+        }
+        if(user!=null){
             return userRepository.save(user);
         }
         else{
