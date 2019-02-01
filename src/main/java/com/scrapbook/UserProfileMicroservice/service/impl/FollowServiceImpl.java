@@ -12,6 +12,7 @@ import com.scrapbook.UserProfileMicroservice.dto.FollowResponseDTO;
 import com.scrapbook.UserProfileMicroservice.entity.Follow;
 import com.scrapbook.UserProfileMicroservice.entity.User;
 import com.scrapbook.UserProfileMicroservice.exceptions.NullValueException;
+import com.scrapbook.UserProfileMicroservice.exceptions.UserNotFound;
 import com.scrapbook.UserProfileMicroservice.repository.FollowRepository;
 import com.scrapbook.UserProfileMicroservice.repository.UserRepository;
 import com.scrapbook.UserProfileMicroservice.service.FollowService;
@@ -55,7 +56,7 @@ public class FollowServiceImpl implements FollowService {
             com.contest.notificationProducer.dto.Follow followNotfication=new com.contest.notificationProducer.dto.Follow();
             followNotfication.setSender(follow.getFollowerId());
             List<NotificationMedium> notificationMediumList=new ArrayList<>();
-            notificationMediumList.add(NotificationMedium.ANDROID);
+            notificationMediumList.add(NotificationMedium.EMAIL);
             header.setNotificationMedium(notificationMediumList);
             header.setNotificationType(NotificationType.FOLLOW);
             header.setNotificationTypeBody(followNotfication);
@@ -92,16 +93,24 @@ public class FollowServiceImpl implements FollowService {
     public List<FollowResponseDTO> findFollowersListByUserId(String id){
         List<Object[]> temp=followRepository.findFollowersListByUserId(id);
         List<FollowResponseDTO> temptemp=new ArrayList<FollowResponseDTO>();
-       for(Object[] oneFollower: temp)
+        for(Object[] oneFollower: temp)
         {
             FollowResponseDTO followResponseDTO=new FollowResponseDTO();
             followResponseDTO.setUserId(oneFollower[0].toString());
-            followResponseDTO.setUsername(oneFollower[1].toString());
-            followResponseDTO.setUserImageURL(oneFollower[2].toString());
+            if(oneFollower[1].toString()==null){
+                throw new UserNotFound();
+            }
+            else{
+                followResponseDTO.setUsername(oneFollower[0].toString());
+            }
+            if(oneFollower[1].toString().equals(null)){
+                followResponseDTO.setUserImageURL("https://www.nicepng.com/png/detail/301-3012856_account-user-profile-avatar-comments-free-image-user.png");
+            }
+            else{
+                followResponseDTO.setUserImageURL(oneFollower[1].toString());
+            }
             temptemp.add(followResponseDTO);
-
         }
-
         return temptemp;
     }
 
@@ -113,33 +122,45 @@ public class FollowServiceImpl implements FollowService {
         {
             FollowResponseDTO followResponseDTO=new FollowResponseDTO();
             followResponseDTO.setUserId(oneFollower[0].toString());
-            followResponseDTO.setUsername(oneFollower[1].toString());
-            followResponseDTO.setUserImageURL(oneFollower[2].toString());
+            followResponseDTO.setUsername(oneFollower[2].toString());
+            if(oneFollower[1].toString().equals(null)){
+                followResponseDTO.setUserImageURL("https://www.nicepng.com/png/detail/301-3012856_account-user-profile-avatar-comments-free-image-user.png");
+            }
+            else{
+                followResponseDTO.setUserImageURL(oneFollower[1].toString());
+            }
             temptemp.add(followResponseDTO);
-
         }
         return temptemp;
-
     }
 
     @Override
     public FollowDTO followResponse(String id){
         FollowDTO followDTO = new FollowDTO();
         User user = userRepository.findOne(id);
+        if(user.getAbout()==null){
+            followDTO.setAbout("No About");
+        }
         followDTO.setAbout(user.getAbout());
         followDTO.setDateOfBirth(user.getDateOfBirth());
         followDTO.setInterest(user.getInterest());
         followDTO.setUserImageURL(user.getUserImageURL());
+        if(user.getUsername()==null){
+            throw new UserNotFound();
+        }
         followDTO.setUsername(user.getUsername());
         followDTO.setFollowResponseFollowerList(findFollowersListByUserId(id));
         followDTO.setFollowResponseDTOList1(findUsersByFollowingId(id));
         return followDTO;
-
-
     }
 
     @Override
     public void deleteByUserIdAndFollowerId(String userId, String followerId) {
         followRepository.deleteByUserIdAndFollowerId(userId, followerId);
+    }
+
+    @Override
+    public void deleteFollowByUserId(String userId){
+        followRepository.deleteFollowByUserId(userId);
     }
 }

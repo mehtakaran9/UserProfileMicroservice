@@ -1,7 +1,5 @@
 package com.scrapbook.UserProfileMicroservice.dto;/* Made by: mehtakaran9 */
 
-import javax.persistence.Entity;
-
 public class FollowResponseDTO {
     private String userId;
     private String username;

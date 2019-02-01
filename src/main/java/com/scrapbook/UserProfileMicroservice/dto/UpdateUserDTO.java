@@ -1,11 +1,6 @@
 package com.scrapbook.UserProfileMicroservice.dto;/* Made by: mehtakaran9 */
 
 import com.scrapbook.UserProfileMicroservice.entity.User;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
-import javax.persistence.Column;
-import javax.persistence.Id;
-import java.util.Date;
 
 public class UpdateUserDTO {
 
@@ -16,8 +11,11 @@ public class UpdateUserDTO {
     public UpdateUserDTO(Boolean status, User user) {
         this.status = status;
         this.user = user;
+
     }
 
+    public UpdateUserDTO() {
+    }
 
     public Boolean getStatus() {
         return status;
