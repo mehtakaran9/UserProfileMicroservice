@@ -1,4 +1,4 @@
-package com.example.UserProfileMicroServce;
+package com.scrapbook.UserProfileMicroservice;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserProfileMicroServceApplicationTests {
+public class UserMicroServceApplicationTests {
 
 	@Test
 	public void contextLoads() {
