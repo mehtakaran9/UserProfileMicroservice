@@ -1,7 +1,6 @@
 package com.scrapbook.UserProfileMicroservice.service;/* Made by: mehtakaran9 */
 
 import com.scrapbook.UserProfileMicroservice.entity.User;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
