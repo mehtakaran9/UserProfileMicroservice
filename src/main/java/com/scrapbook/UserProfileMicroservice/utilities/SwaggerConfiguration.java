@@ -17,6 +17,6 @@ public class SwaggerConfiguration {
     public Docket docket() {
         return new Docket(DocumentationType.SWAGGER_2).select()
                 .apis(RequestHandlerSelectors.basePackage("com.scrapbook.UserProfileMicroservice.controller")).build()
-                .genericModelSubstitutes(new Class[] {DeferredResult.class, ResponseEntity.class});
+                .genericModelSubstitutes(DeferredResult.class, ResponseEntity.class);
     }
 }

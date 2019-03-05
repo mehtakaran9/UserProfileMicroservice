@@ -5,7 +5,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = User.TABLE_NAME, uniqueConstraints = {@UniqueConstraint(columnNames = "username"),
-                                                    @UniqueConstraint(columnNames = "userId")})
+        @UniqueConstraint(columnNames = "userId")})
 public class User {
     public static final String TABLE_NAME = "UserProfile";
     public static final String ID_COLUMN = "userId";
@@ -24,10 +24,6 @@ public class User {
 
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
     public User(String userId, String userImageURL, String username, Date dateOfBirth, String interest, String about) {
         this.userId = userId;
         this.userImageURL = userImageURL;
@@ -37,6 +33,14 @@ public class User {
         this.about = about;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -44,7 +48,6 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
-
 
     @Override
     public String toString() {
@@ -56,10 +59,6 @@ public class User {
                 ", interest='" + interest + '\'' +
                 ", about='" + about + '\'' +
                 '}';
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public String getUserImageURL() {
